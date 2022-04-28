@@ -8,7 +8,6 @@ def parse_code(code : str):
 
     temp = code
     while temp != "":
-        print(temp)
         temp = temp.strip()
 
         blocks = 0
@@ -33,6 +32,24 @@ def parse_code(code : str):
                 ops.append(Oper(OpId.left))
             case "right":
                 ops.append(Oper(OpId.right))
+            case "set":
+                splited = line.split()
+
+                if len(splited) < 2:
+                    print("You didn't give enough arguments for set")
+                    sys.exit(1)
+                if "=" not in " ".join(splited[1:]):
+                    print('"=" wasn`t found in set')
+                    sys.exit(1)
+
+                ops.append(Oper(OpId.set, args=" ".join(splited[1:]).split("=")))
+            case "invert":
+                splited = line.split()
+                if len(splited) < 2:
+                    print("You didn't give enough arguments for invert")
+                    sys.exit(1)
+
+                ops.append(Oper(OpId.inv, args=splited[1]))
             case "halt":
                 ops.append(Oper(OpId.halt))
         
