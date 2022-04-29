@@ -50,9 +50,37 @@ def parse_code(code : str):
                     sys.exit(1)
 
                 ops.append(Oper(OpId.inv, args=splited[1]))
+            case "on":
+                cond_start = line.find("(")
+                cond_end = line.find(")")
+                if cond_start == -1 or cond_end == -1:
+                    print("You didn't close the condition")
+                cond = line[cond_start+1:cond_end]
+                cond = parse_cond(cond)
+
+                ops_start = line.find("{")
+                ops_end = line.rfind("}")
+                inside_ops = line[ops_start+1:ops_end]
+                inside_ops = parse_code(inside_ops)
+
+                ops.append(Oper(OpId.on, args=[cond], ops=inside_ops))
             case "halt":
                 ops.append(Oper(OpId.halt))
         
         temp = temp[line_end+1:]
 
     return ops
+
+def parse_cond(cond : str):
+    """Parses condition from string to operation(colon or not_colon)"""
+
+    if ":" not in cond:
+        print("Colon wasn`t found in condition")
+
+    colon_parts = cond.split(":", maxsplit=1)
+    colon_parts[0] = colon_parts[0].strip()
+    colon_parts[1] = colon_parts[1].strip()
+
+    is_not_colon = colon_parts[0][-1] == "!"
+    
+    return Oper(OpId.not_colon if is_not_colon else OpId.colon, args=colon_parts)

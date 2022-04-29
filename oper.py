@@ -17,9 +17,9 @@ class Oper:
     def __init__(self, id: auto, args: list[Oper | str] = [], ops: list[Oper] = []) -> None:
         self.id = id
         self.args = args
-        self.ops = []
+        self.ops = ops
 
     def __str__(self) -> str:
         return f"<Oper: id={self.id.name}" +\
-            (" args=" + str(self.args) if self.args else "") +\
-            (" ops=" + str([str(self.ops) for i in self.ops]) + ">" if self.ops else ">")
+            (" args=\n" + str([str(i) for i in self.args]) if self.args else "\n") +\
+            (" ops=" + str([str(i) + "\n" for i in self.ops]) + ">" if self.ops else ">")

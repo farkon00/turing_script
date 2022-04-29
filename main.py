@@ -1,5 +1,7 @@
 import sys
 
+from pprint import pprint
+
 from parsing import parse_code
 
 class State:
@@ -32,7 +34,7 @@ def main():
 
     state = State(code)
 
-    print([str(i) for i in state.opers])
+    pprint([str(i) for i in state.opers])
     
 if __name__ == "__main__":
     main()
