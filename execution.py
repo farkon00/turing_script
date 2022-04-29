@@ -1,6 +1,7 @@
 import sys
 
 from oper import *
+from get_state import get_state
 
 def execute_opers(state):
     is_halt = False
@@ -46,11 +47,15 @@ def execute_oper(state, op: Oper):
 
             state.states["cell"] = state.tape[state.current_cell]
 
+        case OpId.set:
+            state.states[op.args[0].strip()] = get_state(state, op.args[1])
+
         case OpId.inv:
-            if op.args[0] not in state.states:
-                print("You didn't define state : " + op.args[0])
+            arg = op.args[0].strip()
+            if arg not in state.states:
+                print("You didn't define state : " + arg)
                 sys.exit(1)
-            state.states[op.args[0]] = int(not state.states[op.args[0]])
+            state.states[arg] = int(not get_state(state, arg))
 
         case OpId.halt:
             return True
