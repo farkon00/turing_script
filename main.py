@@ -3,16 +3,20 @@ import sys
 from pprint import pprint
 
 from parsing import parse_code
+from execution import execute_opers
 
 class State:
     """Execution state class"""
     _instance = None
 
     def __init__(self, code) -> None:
-        self.states = {}
-        self.tape = [0] 
-        self.code = code
-        self.opers = parse_code(self.code)
+        self.states: dict[str, int] = {"cell" : 0}
+
+        self.tape: list[int] = [0] 
+        self.current_cell: int = 0
+
+        self.code: str = code
+        self.opers: list = parse_code(self.code)
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
@@ -34,7 +38,7 @@ def main():
 
     state = State(code)
 
-    pprint([str(i) for i in state.opers])
+    execute_opers(state)
     
 if __name__ == "__main__":
     main()
