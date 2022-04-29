@@ -18,6 +18,8 @@ class State:
         self.code: str = code
         self.opers: list = parse_code(self.code)
 
+        self.is_halt = False
+
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = object.__new__(cls)
@@ -38,7 +40,7 @@ def main():
 
     state = State(code)
 
-    execute_opers(state)
+    execute_opers(state, main=True)
     
 if __name__ == "__main__":
     main()

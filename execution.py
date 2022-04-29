@@ -3,18 +3,21 @@ import sys
 from oper import *
 from get_state import get_state
 
-def execute_opers(state):
-    is_halt = False
-    while not is_halt:
-        for i in state.opers:
-            is_halt = execute_oper(state, i)
+def execute_opers(state, opers=None, main=False):
+    if opers is None:
+        opers = state.opers
+
+    while state.is_halt == False:
+        for i in opers:
+            state.is_halt = execute_oper(state, i)
             
             state.tape[state.current_cell] = state.states["cell"]
 
-            if is_halt:
+            if state.is_halt == True: # Colon returns integer, so if is_halt can inteprete it as halt
                 break
     
-    print("Final tape state:\n" + " ".join(str(i) for i in state.tape))
+    if main:
+        print("Final tape state:\n" + " ".join(str(i) for i in state.tape))
 
 def execute_oper(state, op: Oper):
     match op.id:
@@ -56,6 +59,16 @@ def execute_oper(state, op: Oper):
                 print("You didn't define state : " + arg)
                 sys.exit(1)
             state.states[arg] = int(not get_state(state, arg))
+
+        case OpId.on:
+            if execute_oper(state, op.args[0]):
+                execute_opers(state, op.ops)
+
+        case OpId.colon:
+            return int(get_state(state, op.args[0]) == get_state(state, op.args[1]))
+
+        case OpId.not_colon:
+            return int(get_state(state, op.args[0]) != get_state(state, op.args[1]))
 
         case OpId.halt:
             return True

@@ -85,5 +85,7 @@ def parse_cond(cond: str):
     colon_parts[1] = colon_parts[1].strip()
 
     is_not_colon = colon_parts[0][-1] == "!"
+    if is_not_colon:
+        colon_parts[0] = colon_parts[0][:-1]
 
     return Oper(OpId.not_colon if is_not_colon else OpId.colon, args=colon_parts)
