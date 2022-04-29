@@ -2,7 +2,7 @@ import sys
 
 from oper import *
 
-def parse_code(code : str):
+def parse_code(code: str):
     """Parses code into operations"""
     ops = []
 
@@ -51,19 +51,7 @@ def parse_code(code : str):
 
                 ops.append(Oper(OpId.inv, args=splited[1]))
             case "on":
-                cond_start = line.find("(")
-                cond_end = line.find(")")
-                if cond_start == -1 or cond_end == -1:
-                    print("You didn't close the condition")
-                cond = line[cond_start+1:cond_end]
-                cond = parse_cond(cond)
-
-                ops_start = line.find("{")
-                ops_end = line.rfind("}")
-                inside_ops = line[ops_start+1:ops_end]
-                inside_ops = parse_code(inside_ops)
-
-                ops.append(Oper(OpId.on, args=[cond], ops=inside_ops))
+                parse_on(line, ops)
             case "halt":
                 ops.append(Oper(OpId.halt))
         
@@ -71,7 +59,22 @@ def parse_code(code : str):
 
     return ops
 
-def parse_cond(cond : str):
+def parse_on(line: str, ops: list[Oper]):
+    cond_start = line.find("(")
+    cond_end = line.find(")")
+    if cond_start == -1 or cond_end == -1:
+        print("You didn't close the condition")
+    cond = line[cond_start+1:cond_end]
+    cond = parse_cond(cond)
+
+    ops_start = line.find("{")
+    ops_end = line.rfind("}")
+    inside_ops = line[ops_start+1:ops_end]
+    inside_ops = parse_code(inside_ops)
+
+    ops.append(Oper(OpId.on, args=[cond], ops=inside_ops))
+
+def parse_cond(cond: str):
     """Parses condition from string to operation(colon or not_colon)"""
 
     if ":" not in cond:
@@ -82,5 +85,5 @@ def parse_cond(cond : str):
     colon_parts[1] = colon_parts[1].strip()
 
     is_not_colon = colon_parts[0][-1] == "!"
-    
+
     return Oper(OpId.not_colon if is_not_colon else OpId.colon, args=colon_parts)
