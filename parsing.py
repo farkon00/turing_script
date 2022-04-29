@@ -49,7 +49,7 @@ def parse_code(code: str):
                     print("You didn't give enough arguments for invert")
                     sys.exit(1)
 
-                ops.append(Oper(OpId.inv, args=splited[1]))
+                ops.append(Oper(OpId.inv, args=splited[1:]))
             case "on":
                 parse_on(line, ops)
             case "halt":

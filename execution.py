@@ -41,10 +41,16 @@ def execute_oper(state, op: Oper):
                 except ValueError:
                     print("You didn't input number")
                     sys.exit(1)
-                    
+
                 state.tape.append(inp)
 
             state.states["cell"] = state.tape[state.current_cell]
+
+        case OpId.inv:
+            if op.args[0] not in state.states:
+                print("You didn't define state : " + op.args[0])
+                sys.exit(1)
+            state.states[op.args[0]] = int(not state.states[op.args[0]])
 
         case OpId.halt:
             return True
