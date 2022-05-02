@@ -42,14 +42,18 @@ def parse_code(code: str):
                 print('"=" wasn`t found in var')
                 sys.exit(1)
             if " ".join(splited[1:]).split("=")[0].strip() == "_start":
-                print("Cant var special state _start")
-                exit(1)
+                print("Cant set special state _start")
+                sys.exit(1)
 
             ops.append(Oper(OpId.var, args=" ".join(splited[1:]).split("=")))
         elif line.split(maxsplit=1)[0] == "invert":
             splited = line.split()
             if len(splited) < 2:
                 print("You didn't give enough arguments for invert")
+                sys.exit(1)
+
+            if splited[1].strip() == "_start":
+                print("Cant invert special state _start")
                 sys.exit(1)
 
             ops.append(Oper(OpId.inv, args=splited[1:]))
