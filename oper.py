@@ -6,7 +6,7 @@ class OpId(Enum):
     on = auto()
     colon = auto()
     not_colon = auto()
-    set = auto()
+    var = auto()
     inv = auto()
     left = auto()
     right = auto()

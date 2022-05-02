@@ -52,7 +52,7 @@ def execute_oper(state, op: Oper):
 
             state.states["cell"] = state.tape[state.current_cell]
 
-        case OpId.set:
+        case OpId.var:
             state.states[op.args[0].strip()] = get_state(state, op.args[1])
 
         case OpId.inv:

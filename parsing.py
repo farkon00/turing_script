@@ -32,20 +32,20 @@ def parse_code(code: str):
                 ops.append(Oper(OpId.left))
             case "right":
                 ops.append(Oper(OpId.right))
-            case "set":
+            case "var":
                 splited = line.split()
 
                 if len(splited) < 2:
-                    print("You didn't give enough arguments for set")
+                    print("You didn't give enough arguments for var")
                     sys.exit(1)
                 if "=" not in " ".join(splited[1:]):
-                    print('"=" wasn`t found in set')
+                    print('"=" wasn`t found in var')
                     sys.exit(1)
                 if " ".join(splited[1:]).split("=")[0].strip() == "_start":
-                    print("Cant set special state _start")
+                    print("Cant var special state _start")
                     exit(1)
 
-                ops.append(Oper(OpId.set, args=" ".join(splited[1:]).split("=")))
+                ops.append(Oper(OpId.var, args=" ".join(splited[1:]).split("=")))
             case "invert":
                 splited = line.split()
                 if len(splited) < 2:
