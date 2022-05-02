@@ -22,55 +22,54 @@ def execute_main(state):
     print("Final tape state:\n" + " ".join(str(i) for i in state.tape))
 
 def execute_oper(state, op: Oper):
-    match op.id:
-        case OpId.left:
-            state.current_cell -= 1
-            if state.current_cell < 0:
-                inp = input("Input left cell: ")
-                try:
-                    inp = int(bool(int(inp))) # Converts any number to 0 or 1
-                except ValueError:
-                    print("You didn't input number")
-                    sys.exit(1)
-
-                state.tape.insert(0, inp)
-                state.current_cell = 0
-
-            state.states["cell"] = state.tape[state.current_cell]
-
-        case OpId.right:
-            state.current_cell += 1
-            if state.current_cell >= len(state.tape):
-                inp = input("Input right cell: ")
-                try:
-                    inp = int(bool(int(inp))) # Converts any number to 0 or 1
-                except ValueError:
-                    print("You didn't input number")
-                    sys.exit(1)
-
-                state.tape.append(inp)
-
-            state.states["cell"] = state.tape[state.current_cell]
-
-        case OpId.var:
-            state.states[op.args[0].strip()] = get_state(state, op.args[1])
-
-        case OpId.inv:
-            arg = op.args[0].strip()
-            if arg not in state.states:
-                print("You didn't define state : " + arg)
+    if op.id == OpId.left:
+        state.current_cell -= 1
+        if state.current_cell < 0:
+            inp = input("Input left cell: ")
+            try:
+                inp = int(bool(int(inp))) # Converts any number to 0 or 1
+            except ValueError:
+                print("You didn't input number")
                 sys.exit(1)
-            state.states[arg] = int(not get_state(state, arg))
 
-        case OpId.on:
-            if execute_oper(state, op.args[0]):
-                return execute_opers(state, op.ops)
+            state.tape.insert(0, inp)
+            state.current_cell = 0
 
-        case OpId.colon:
-            return int(get_state(state, op.args[0]) == get_state(state, op.args[1]))
+        state.states["cell"] = state.tape[state.current_cell]
 
-        case OpId.not_colon:
-            return int(get_state(state, op.args[0]) != get_state(state, op.args[1]))
+    elif op.id == OpId.right:
+        state.current_cell += 1
+        if state.current_cell >= len(state.tape):
+            inp = input("Input right cell: ")
+            try:
+                inp = int(bool(int(inp))) # Converts any number to 0 or 1
+            except ValueError:
+                print("You didn't input number")
+                sys.exit(1)
 
-        case OpId.halt:
-            return True
+            state.tape.append(inp)
+
+        state.states["cell"] = state.tape[state.current_cell]
+
+    elif op.id == OpId.var:
+        state.states[op.args[0].strip()] = get_state(state, op.args[1])
+
+    elif op.id == OpId.inv:
+        arg = op.args[0].strip()
+        if arg not in state.states:
+            print("You didn't define state : " + arg)
+            sys.exit(1)
+        state.states[arg] = int(not get_state(state, arg))
+
+    elif op.id == OpId.on:
+        if execute_oper(state, op.args[0]):
+            return execute_opers(state, op.ops)
+
+    elif op.id == OpId.colon:
+        return int(get_state(state, op.args[0]) == get_state(state, op.args[1]))
+
+    elif op.id == OpId.not_colon:
+        return int(get_state(state, op.args[0]) != get_state(state, op.args[1]))
+
+    elif op.id == OpId.halt:
+        return True

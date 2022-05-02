@@ -27,36 +27,36 @@ def parse_code(code: str):
             sys.exit(1)
 
         line = temp[:line_end]
-        match line.split(maxsplit=1)[0]:
-            case "left":
-                ops.append(Oper(OpId.left))
-            case "right":
-                ops.append(Oper(OpId.right))
-            case "var":
-                splited = line.split()
 
-                if len(splited) < 2:
-                    print("You didn't give enough arguments for var")
-                    sys.exit(1)
-                if "=" not in " ".join(splited[1:]):
-                    print('"=" wasn`t found in var')
-                    sys.exit(1)
-                if " ".join(splited[1:]).split("=")[0].strip() == "_start":
-                    print("Cant var special state _start")
-                    exit(1)
+        if line.split(maxsplit=1)[0] == "left":
+            ops.append(Oper(OpId.left))
+        elif line.split(maxsplit=1)[0] == "right":
+            ops.append(Oper(OpId.right))
+        elif line.split(maxsplit=1)[0] == "var":
+            splited = line.split()
 
-                ops.append(Oper(OpId.var, args=" ".join(splited[1:]).split("=")))
-            case "invert":
-                splited = line.split()
-                if len(splited) < 2:
-                    print("You didn't give enough arguments for invert")
-                    sys.exit(1)
+            if len(splited) < 2:
+                print("You didn't give enough arguments for var")
+                sys.exit(1)
+            if "=" not in " ".join(splited[1:]):
+                print('"=" wasn`t found in var')
+                sys.exit(1)
+            if " ".join(splited[1:]).split("=")[0].strip() == "_start":
+                print("Cant var special state _start")
+                exit(1)
 
-                ops.append(Oper(OpId.inv, args=splited[1:]))
-            case "on":
-                parse_on(line, ops)
-            case "halt":
-                ops.append(Oper(OpId.halt))
+            ops.append(Oper(OpId.var, args=" ".join(splited[1:]).split("=")))
+        elif line.split(maxsplit=1)[0] == "invert":
+            splited = line.split()
+            if len(splited) < 2:
+                print("You didn't give enough arguments for invert")
+                sys.exit(1)
+
+            ops.append(Oper(OpId.inv, args=splited[1:]))
+        elif line.split(maxsplit=1)[0] == "on":
+            parse_on(line, ops)
+        elif line.split(maxsplit=1)[0] == "halt":
+            ops.append(Oper(OpId.halt))
         
         temp = temp[line_end+1:]
 
