@@ -1,9 +1,7 @@
 import sys
 
-from pprint import pprint
-
 from parsing import parse_code
-from execution import execute_opers
+from execution import execute_main
 
 class State:
     """Execution state class"""
@@ -40,7 +38,7 @@ def main():
 
     state = State(code)
 
-    execute_opers(state, main=True)
+    execute_main(state)
     
 if __name__ == "__main__":
     main()
