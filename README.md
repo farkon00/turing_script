@@ -72,7 +72,7 @@ Turing machine has infinit tape divided into cells, read/write device for tape a
     halt;
   };
   on (_start : 1) {
-    inv cell;
+    invert cell;
   };
   ```
 
@@ -85,7 +85,7 @@ Turing machine has infinit tape divided into cells, read/write device for tape a
     halt;
   };
   on (_start : 1) {
-    inv cell;
+    invert cell;
   };
   ```
 
