@@ -1,0 +1,22 @@
+on (_start : 1) {
+    left;
+    right;
+    right;
+
+    on (cell : 1) {
+        left;
+        var cell = 1;
+        halt;
+    };
+
+    left;
+    left;
+
+    on (cell : 1) {
+        right;
+        var cell = 1;
+        halt;
+    };
+
+    halt;
+};
