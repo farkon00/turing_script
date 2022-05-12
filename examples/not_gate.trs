@@ -1,0 +1,10 @@
+on (_start : 1) {
+    left;
+
+    on (cell : 0) {
+        right;
+        var cell = 1;
+    };
+
+    halt;
+};
