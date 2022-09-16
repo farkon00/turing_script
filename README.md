@@ -1,7 +1,7 @@
 # Turing script
 Turing script is interpreted programming language, that emulates turing machine. Its written in python(yes slow interpreted language in slow interpreted language).
 
-Turing machine has infinit tape divided into cells, read/write device for tape and states. All of this gives ability to execute any solvable algorithm. And all of this is implemented in Turing Script.
+Turing machine has infinit tape divided into cells, read/write device for tape and states. All of this gives ability to execute any solvable algorithm. And all of these features are in Turing Script.
 
 # Documentation
 ## Cycles
