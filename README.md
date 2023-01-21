@@ -1,11 +1,11 @@
 # Turing script
-Turing script is interpreted programming language, that emulates turing machine. Its written in python(yes slow interpreted language in slow interpreted language).
+Turing script is interpreted programming language, that emulates turing machine. It's written in python(yes slow interpreted language in slow interpreted language).
 
-Turing machine has infinit tape divided into cells, read/write device for tape and states. All of this gives ability to execute any solvable algorithm. And all of these features are in Turing Script.
+Turing machine has infinite tape divided into cells, read/write device for the tape and states. All of this gives ability to execute any solvable algorithm. And all of these features are in Turing Script.
 
 # Documentation
 ## Cycles
-  Code in turing script is ran at cycles, cycle beggins right after end of previous. But new cycle wont start, if previous cycle wont be finished, so it wont beggin, if halt happend. Cycle just runs all code in file and ends, when execution ended.
+  Code in turing script runs in cycles, cycle begins right after the end of a previous one. But new cycle won't start, if previous cycle won't be finished, so it won't beggin, if halt happend. Cycle just runs all code in file and ends, when file ends or the halt is encountered.
 ## Tape
   ## Left
   To move read/write device 1 cell left `left` keyword is used without any arguments. If cell was never touched before turing script will input this cell from user.
@@ -30,7 +30,7 @@ Turing machine has infinit tape divided into cells, read/write device for tape a
   halt;
   ```
   ## Cell state
-  Cell is special state that represents current cell. Can be used in colon operators or with `var` keyword to cnange current cell.
+  Cell is special state that represents current cell. Can be used in colon operators or with `var` keyword to change the current cell.
 
   Example:
   ```
@@ -77,7 +77,7 @@ Turing machine has infinit tape divided into cells, read/write device for tape a
   ```
 
   ## Colon operators
-  In `on` keyword condition colon operators is used, its ":" and ":!". First one checks if state equal to another state or value, second one is reversed ":".
+  In `on` keyword condition colon operators is used, colon operators are ":" and "!:". First one checks if state equal to another state or value, second one is reversed ":".
 
   Example:
   ```
@@ -90,7 +90,7 @@ Turing machine has infinit tape divided into cells, read/write device for tape a
   ```
 
   ## _start special state
-  `_start` special state is used to run code in first cycle of pragram or every cycle excpet first. So in first cycle its value will be 1, in all other will be 0.
+  `_start` special state is used to run code in the first cycle of program or every cycle excpet first one. So in the first cycle its value will be 1, in all other ones it will be 0.
 
   Example:
   ```
